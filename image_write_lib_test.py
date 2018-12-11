@@ -4,7 +4,7 @@ import os
 
 MY_DIR = os.path.dirname(os.path.realpath(__file__)) + '/'
 
-class TestTaxes(unittest.TestCase):
+class TestImages(unittest.TestCase):
     """
     test class
     """
