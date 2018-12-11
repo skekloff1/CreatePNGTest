@@ -52,6 +52,7 @@ class TestImages(unittest.TestCase):
         # read the palette and build a dictionary
         palette_fname = 'CHROMA.MAP.csv'
         palette_dict = build_palette_dictionary(MY_DIR + palette_fname)
+        # print(palette_dict)
 
         # use that to build the image
         fname='img_my_palette.png'

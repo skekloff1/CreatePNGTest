@@ -15,29 +15,7 @@ import csv
 from math import sqrt
 
 def build_an_image_example(img_fname):
-    """
-    sample code to build an image and save it as PNG
-    """
-    # create the image in memory
-    my_image = Image.new('RGB', (512,512) )
-    my_image_pixels = my_image.load()
 
-    # get the image size
-    image_x_size = my_image.size[0]
-    image_y_size = my_image.size[1]
-
-    # iterate over x and y to pick the pixel color
-    for x in range(image_x_size):
-        for y in range(image_y_size):
-            # pick the pixel color as an RGB tuple
-            pixel_color = ( 254, 127, 3)
-
-            # set the color to the image
-            my_image_pixels[x, y] = pixel_color
-
-    # save the image
-    print(f'saving {img_fname}')
-    my_image.save(img_fname, 'png')
 
 
 def build_image_yellow(img_fname, image_x_size=512, image_y_size=512):
@@ -170,4 +148,19 @@ def build_image_using_palette(img_fname, palette_dict):
     Now, using the value, find the RGB color in the palette.  Set the
     pixel to that color
     """
-    pass
+    my_image = Image.new('RGB', (512,512) )
+    my_pixels = my_image.load()
+
+    image_x_size = my_image.size[0]
+    image_y_size = my_image.size[1]
+
+    for x in range(image_x_size):
+        for y in range(image_y_size):
+            num = abs(x**2 - y**2)
+            num2 = x*y*2
+            result = int( sqrt( num + num2) % 355 )
+            pixel_color = palette_dict[result]
+            my_pixels[x, y] = pixel_color
+
+    print(f'saving {img_fname}')
+    my_image.save(img_fname, 'png')
