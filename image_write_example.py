@@ -19,13 +19,18 @@ IMG_SIZE_TUPLE = (IMG_X_SIZE, IMG_Y_SIZE)
 
 def pick_pixel_color(x,y):
     red_intensity = 0
-    green_intensity = 128
+    # red_intensity = 255 if y % 25 in range(12) else 0
+    # green_intensity = int( (x+y) / 4)
     # TODO: try setting the green intensity to one of these (and try your own)
     # green_intensity = 255 if y > 255 else y
-    # green_intensity = y % 256
-    # green_intensity = y % 256 + x % 256
-    # green_intensity = x*y % 256
-    blue_intensity =0
+    # blue_intensity = int( (x+y) / 4)
+    # green_intensity = int(x / 2) % 256
+    # blue_intensity = int(x / 2) % 256
+    green_intensity =  int((1024-(x+y))/4) % 256
+    # green_intensity = int(x+ 2*y) % 256
+    # green_intensity = 0
+    blue_intensity = 0
+    # blue_intensity = 255 if x % 25 in range(12) else 0
     color = (red_intensity, green_intensity, blue_intensity)
 
     return color
