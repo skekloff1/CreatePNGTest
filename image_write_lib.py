@@ -138,12 +138,6 @@ def build_palette_dictionary(palette_fname):
     """
     my_palette_dict = dict()
 
-    with open(palette_fname, 'r') as inf:
-        csv_reader = csv.reader(inf)
-        for row in csv_reader:
-            key = int(row[0])
-            rgb = (int(row[1]), int(row[2]), int(row[3]))
-            my_palette_dict[key] = rgb
     return my_palette_dict
 
 
