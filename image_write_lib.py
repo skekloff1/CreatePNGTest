@@ -47,6 +47,24 @@ def build_image_yellow(img_fname, image_x_size=512, image_y_size=512):
     """
     pass
 
+
+    my_yellow = Image.new ('RGB', (512, 512) )
+    my_yellow_pixels = my_yellow.load()
+
+    image_x_size = my_yellow.size[0]
+    image_y_size =my_yellow.size[1]
+
+
+
+    for x in range(image_x_size):
+        for y in range(image_y_size):
+            pixel_color = ( 255, 255, 0)
+
+            my_yellow_pixels[x, y] = pixel_color
+
+    print(f'saving {img_fname}')
+    my_yellow.save(img_fname, 'png')
+
 def build_image_double_red_gradient(img_fname):
     """
     create an image that gradient scales from 0 (black) to 255 (full red)
@@ -56,6 +74,20 @@ def build_image_double_red_gradient(img_fname):
     """
     pass
 
+    my_grad = Image.new('RGB', (512, 512) )
+    my_grad_pixels = my_grad.load()
+
+    image_x_size = my_grad.size[0]
+    image_y_size = my_grad.size[1]
+
+    for x in range (image_x_size):
+        for y in range (image_y_size):
+            pixel_color = (x%256, 0,  0)
+
+            my_grad_pixels[x,y] = pixel_color
+    print(f'saving {img_fname}')
+    my_grad.save(img_fname, 'png')
+
 def build_image_single_red_gradient(img_fname):
     """
     create an image that gradient scales from 0 to 255 of red
@@ -63,7 +95,19 @@ def build_image_single_red_gradient(img_fname):
     and the gradient scales smoothly across the 512 horizontal pixels.
     """
     pass
+    my_nut = Image.new('RGB', (512, 512) )
+    my_nut_pixels = my_nut.load()
 
+    image_x_size = my_nut.size[0]
+    image_y_size = my_nut.size[1]
+
+    for x in range (image_x_size):
+        for y in range (image_y_size):
+            pixel_color = (int(x/2), 0,  0)
+
+            my_nut_pixels[x,y] = pixel_color
+    print(f'saving {img_fname}')
+    my_nut.save(img_fname, 'png')
 
 def build_image_yellow_gradient_horizontal(img_fname):
     """
@@ -74,6 +118,20 @@ def build_image_yellow_gradient_horizontal(img_fname):
     of red
     """
     pass
+    my_yeet = Image.new('RGB', (512, 512) )
+    my_yeet_pixels = my_yeet.load()
+
+    image_x_size = my_yeet.size[0]
+    image_y_size = my_yeet.size[1]
+
+    for x in range (image_x_size):
+        for y in range (image_y_size):
+            pixel_color = (int(x/2),int(x/2),  0)
+
+            my_yeet_pixels[x,y] = pixel_color
+    print(f'saving {img_fname}')
+    my_yeet.save(img_fname, 'png')
+
 
 def build_image_cyan_gradient_diagonal(img_fname):
     """
@@ -137,6 +195,15 @@ def build_palette_dictionary(palette_fname):
     return the dictionary
     """
     my_palette_dict = dict()
+    with open (palette_fname, 'r') as supernut:
+        my_csv = csv.reader(supernut)
+
+        for row in my_csv:
+            key = int (row[0])
+            value = (int (row[1]), int (row[2]), int(row[3]))
+
+            my_palette_dict[key] = value
+
 
     return my_palette_dict
 
@@ -155,13 +222,32 @@ def build_image_using_palette(img_fname, palette_dict):
         subtract the y square from the x square then take the abs of it
         multiple the x coordinate and the y coordinate and then double it
         add those two together
-        take the square root of that.
+        take the square root of that. Make sure this is an INT
+
         divide it by the palette_max+1 (355 in our case) and take the remainder.
-        Make sure this is an INT
 
         This is your value
 
     Now, using the value, find the RGB color in the palette.  Set the
     pixel to that color
     """
-    pass
+    my_heidi = Image.new('RGB', (512, 512) )
+    my_heidi_pixels = my_heidi.load()
+
+    image_x_size = my_heidi.size[0]
+    image_y_size = my_heidi.size[1]
+    #print (palette_dict)
+    for x in range (image_x_size):
+        for y in range (image_y_size):
+            alvin_color = (x*x)
+            alvin_color1 = (y*y)
+            alvin_color2 = abs (alvin_color1 - alvin_color)
+            alvin_color3 = (x*y*2)
+            alvin_color4 = alvin_color2 + alvin_color3
+            alvin_color5 = int (sqrt(alvin_color4))
+            alvin_color6 = int (alvin_color5%355)
+            #pixel_color = (int(x/2),int(x/2),  0)
+            pixel_color = palette_dict[alvin_color6]
+            my_heidi_pixels[x,y] = pixel_color
+    print(f'saving {img_fname}')
+    my_heidi.save(img_fname, 'png')
