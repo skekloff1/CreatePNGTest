@@ -142,6 +142,21 @@ def build_image_cyan_gradient_diagonal(img_fname):
     bottom right
     """
     pass
+    my_dhil = Image.new('RGB', (512, 512) )
+    my_dhil_pixels = my_dhil.load()
+
+    image_x_size = my_dhil.size[0]
+    image_y_size = my_dhil.size[1]
+
+    for x in range (image_x_size):
+        for y in range (image_y_size):
+
+            pixel_color = (0, int ((x+y)/4), int ((x+y)/4))
+
+            my_dhil_pixels[x,y] = pixel_color
+    print(f'saving {img_fname}')
+    my_dhil.save(img_fname, 'png')
+
 
 def build_image_green_gradient_diagonal_inverted(img_fname):
     """
@@ -150,7 +165,20 @@ def build_image_green_gradient_diagonal_inverted(img_fname):
     green and the 255 is top left and 0 is bottom right.
     """
     pass
+    run_it_back_turbo = Image.new('RGB', (512, 512) )
+    run_it_back_turbo_pixels = run_it_back_turbo.load()
 
+    image_x_size = run_it_back_turbo.size[0]
+    image_y_size = run_it_back_turbo.size[1]
+
+    for x in range (image_x_size):
+        for y in range (image_y_size):
+
+            pixel_color = (0, int ((x+y)*4), 0)
+
+            run_it_back_turbo_pixels[x,y] = pixel_color
+    print(f'saving {img_fname}')
+    run_it_back_turbo.save(img_fname, 'png')
 def build_image_red_bands_horizontal(img_fname):
     """
     alternating bands of red (255 of red) and black (0) that
@@ -208,6 +236,27 @@ def build_palette_dictionary(palette_fname):
     return my_palette_dict
 
 
+def calculate (x,y):
+    alvin_color = (x*x)
+    alvin_color1 = (y*y)
+    alvin_color2 = abs (alvin_color1 - alvin_color)
+    alvin_color3 = (x*y*2)
+    alvin_color4 = alvin_color2 + alvin_color3
+    alvin_color5 = int (sqrt(alvin_color4))
+    alvin_color6 = int (alvin_color5%355)
+
+    return (alvin_color6)
+
+def calculate2 (z,z0):
+    for i in range (255):
+        result = z*z + z0
+        z = result
+        #print (result)
+        if abs(z) > 2:
+            break
+    return i
+
+
 def build_image_using_palette(img_fname, palette_dict):
     """
     TROPHY
@@ -231,7 +280,7 @@ def build_image_using_palette(img_fname, palette_dict):
     Now, using the value, find the RGB color in the palette.  Set the
     pixel to that color
     """
-    my_heidi = Image.new('RGB', (512, 512) )
+    my_heidi = Image.new('RGB', (700, 400) )
     my_heidi_pixels = my_heidi.load()
 
     image_x_size = my_heidi.size[0]
@@ -239,15 +288,13 @@ def build_image_using_palette(img_fname, palette_dict):
     #print (palette_dict)
     for x in range (image_x_size):
         for y in range (image_y_size):
-            alvin_color = (x*x)
-            alvin_color1 = (y*y)
-            alvin_color2 = abs (alvin_color1 - alvin_color)
-            alvin_color3 = (x*y*2)
-            alvin_color4 = alvin_color2 + alvin_color3
-            alvin_color5 = int (sqrt(alvin_color4))
-            alvin_color6 = int (alvin_color5%355)
+            x_coord = (3.5/700)*x -2.5
+            y_coord = (y/200) - 1
+            z = x_coord + y_coord *1j
+            z0 = z
+            result = calculate2 (z,z0)
             #pixel_color = (int(x/2),int(x/2),  0)
-            pixel_color = palette_dict[alvin_color6]
+            pixel_color = palette_dict[result]
             my_heidi_pixels[x,y] = pixel_color
     print(f'saving {img_fname}')
     my_heidi.save(img_fname, 'png')
